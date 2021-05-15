@@ -20,6 +20,18 @@ const filemanager = new Filemanager();
 filemanager.fmOpen();
 ```
 
+# Filemanager configuration
+First of all you must add base url - the path of the location where file manager directory is located.
+
+*config* parameter gives an ability to configure elFinder file manager it self.
+
+```
+const filemanager = new Filemanager({
+    baseUrl: 'http://hostname/public/dir/filemanager',
+    config: {}
+});
+```
+
 # Get files from callback
 Files will be return as a callback parameter once file going to be double clicked. You also can select multiple files, right click on them and inside the context menu click on *select files* button.
 ```
