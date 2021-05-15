@@ -1,7 +1,7 @@
 const Filemanager = function() {
 
     this.optionsObj = arguments[0];
-    this.baseUrl = this.optionsObj.baseUrl ? this.optionsObj.baseUrl : location.origin;
+    this.baseUrl = this.optionsObj && this.optionsObj.hasOwnProperty('baseUrl') ? this.optionsObj.baseUrl : location.origin;
 
     const loadDeps = (cssOrJs, arrDeps, headOrBody) => {
         
@@ -119,8 +119,8 @@ Filemanager.prototype.fmOpen = function(callback) {
     $(document.body).append(fmHTML);
 
     // If user options 
-    if (this.optionsObj.config) {this.optionsObj.config = {...this.optionsObj.config, ...options} }
-    const elfinderOptions = this.optionsObj.config ? this.optionsObj.config : options;
+    if (this.optionsObj && this.optionsObj.hasOwnProperty('config')) {this.optionsObj.config = {...this.optionsObj.config, ...options} }
+    const elfinderOptions = this.optionsObj && this.optionsObj.hasOwnProperty('config') ? this.optionsObj.config : options;
 
     setTimeout(() => {
         $('#elfinder').elfinder(elfinderOptions).elfinder('instance');
