@@ -25,10 +25,13 @@ First of all you must add base url - the path of the location where file manager
 
 *config* parameter gives an ability to configure elFinder file manager it self.
 
+*title* parameter gives title to the modal box
+
 ```
 const filemanager = new Filemanager({
     baseUrl: 'http://hostname/public/dir/filemanager',
-    config: {}
+    config: {},
+    title: 'File manager'
 });
 ```
 
