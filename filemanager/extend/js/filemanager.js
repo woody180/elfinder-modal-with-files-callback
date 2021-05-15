@@ -1,8 +1,9 @@
 const Filemanager = function() {
 
     this.optionsObj = arguments[0];
+    this.baseUrl = this.optionsObj.baseUrl ? this.optionsObj.baseUrl : location.origin;
 
-    const loadDeps = function (cssOrJs, arrDeps, headOrBody) {
+    const loadDeps = (cssOrJs, arrDeps, headOrBody) => {
         
         arrDeps.forEach(link => {
             const elem = document.createElement(cssOrJs);
@@ -11,7 +12,7 @@ const Filemanager = function() {
             if (attr === 'href') elem.setAttribute('rel', 'stylesheet')
             if (attr === 'src') elem.setAttribute('type', 'text/javascript')
 
-            elem.setAttribute(attr, `${location.origin}/${link}`);
+            elem.setAttribute(attr, `${this.baseUrl}/${link}`);
 
             document.querySelector(headOrBody).insertAdjacentElement('beforeend', elem);
         });
@@ -67,11 +68,13 @@ Filemanager.prototype.fmOpen = function(callback) {
             return !this._disabled && cnt ? 0 : -1;
         }
     };
+
+    console.log(this.baseUrl);
     
     // elFinder options
     let options = {
-        soundpath: `${location.origin}/filemanager/sounds/`,
-        baseUrl: location.origin,
+        soundpath: `${this.baseUrl}/filemanager/sounds/`,
+        baseUrl: this.baseUrl,
         // Load themes
         // cssAutoLoad: [
         //     `${location.origin}/filemanager/themes/windows-10/css/theme.css`, 
@@ -110,14 +113,14 @@ Filemanager.prototype.fmOpen = function(callback) {
             $('#elfinder').remove();
             $('.filemanager-container').remove();
         },
-        url: `${window.location.origin}/filemanager/php/connector.minimal.php`,
+        url: `${this.baseUrl}/filemanager/php/connector.minimal.php`,
     };
 
     $(document.body).append(fmHTML);
 
     // If user options 
-    if (this.optionsObj) {this.optionsObj = {...this.optionsObj, ...options} }
-    const elfinderOptions = this.optionsObj ? this.optionsObj : options;
+    if (this.optionsObj.config) {this.optionsObj.config = {...this.optionsObj.config, ...options} }
+    const elfinderOptions = this.optionsObj.config ? this.optionsObj.config : options;
 
     setTimeout(() => {
         $('#elfinder').elfinder(elfinderOptions).elfinder('instance');
